@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta especial</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+
+/* Fondo atardecer playa */
+
+background:linear-gradient(
+to top,
+#ff9966 0%,
+#ff5e62 35%,
+#ffcc88 60%,
+#87CEEB 100%
+);
+
+}
+
+/* Nubes más realistas */
+
+.cloud{
+position:absolute;
+background:white;
+border-radius:50px;
+opacity:.9;
+filter:blur(1px);
+}
+
+.cloud:before,
+.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud1{
+width:180px;
+height:60px;
+top:15%;
+left:-200px;
+animation:moveClouds 60s linear infinite;
+}
+
+.cloud2{
+width:220px;
+height:70px;
+top:30%;
+left:-250px;
+animation:moveClouds 80s linear infinite;
+}
+
+.cloud:before{
+width:90px;
+height:90px;
+top:-40px;
+left:30px;
+}
+
+.cloud:after{
+width:100px;
+height:100px;
+top:-50px;
+right:30px;
+}
+
+@keyframes moveClouds{
+0%{transform:translateX(0)}
+100%{transform:translateX(150vw)}
+}
+
+/* Contenedor */
+
+.container{
+text-align:center;
+z-index:2;
+color:white;
+}
+
+/* Botones */
+
+button{
+padding:12px 22px;
+border:none;
+border-radius:25px;
+background:#ffffff;
+color:#ff5e62;
+font-size:16px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:#ffe0e0;
+}
+
+/* Sobre */
+
+.envelope{
+width:220px;
+height:140px;
+background:white;
+position:relative;
+margin:auto;
+border-radius:6px;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+border-left:110px solid transparent;
+border-right:110px solid transparent;
+border-bottom:70px solid #f0f0f0;
+}
+
+/* Carta */
+
+.letter{
+display:none;
+width:330px;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.4);
+line-height:1.6;
+color:#333;
+animation:fade 1s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1}
+}
+
+/* Imagen final */
+
+.final-img{
+display:none;
+text-align:center;
+}
+
+.final-img img{
+width:280px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,.5);
+animation:zoom 1.5s;
+}
+
+@keyframes zoom{
+from{transform:scale(.5);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Nubes -->
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<!-- Pantalla inicial -->
+
+<div class="container" id="inicio">
+
+<h2>Tengo algo especial para ti…</h2>
+
+<button onclick="mostrarSobre()">Abrir sorpresa</button>
+
+</div>
+
+<!-- Sobre -->
+
+<div class="container" id="sobre" style="display:none">
+
+<div class="envelope" onclick="abrirCarta()"></div>
+
+<p>Haz clic en el sobre</p>
+
+</div>
+
+<!-- Carta -->
+
+<div class="letter" id="carta">
+
+<p id="texto"></p>
+
+<br>
+
+<button onclick="mostrarFinal()">Continuar</button>
+
+</div>
+
+<!-- Final con imagen -->
+
+<div class="container final-img" id="final">
+
+<img src="imagen-final.jpeg">
+
+<p style="margin-top:20px;font-size:18px;">
+Para mi guerita hermosa 💙
+</p>
+
+</div>
+
+<!-- Música -->
+
+<audio id="musica" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* TEXTO DE LA CARTA */
+
+const mensaje = `Feliz cumpleaños guerita hermosa.
+
+Le doy gracias a Dios de que 
+llegaras a mi vida, y que me 
+permitiera tener un año mas 
+a una persona tan especial 
+y tan linda como lo eres 
+tu para mi.
+
+Guerita tienes algo que hace que 
+los momentos se sientan más cálidos,
+como un cielo de atardecer junto al mar
+como aquella primera mez que me toco 
+pasar ese atardecer tan especial donde 
+te veias hermosa.
+
+Esta pequeña carta la hice pensando en ti.
+
+Porque eres esa persona que mi 
+que hace que mi vida se vea 
+más bonita.`;
+
+function mostrarSobre(){
+document.getElementById("inicio").style.display="none";
+document.getElementById("sobre").style.display="block";
+}
+
+function abrirCarta(){
+document.getElementById("sobre").style.display="none";
+document.getElementById("carta").style.display="block";
+document.getElementById("musica").play();
+escribir();
+}
+
+let i=0;
+
+function escribir(){
+if(i<mensaje.length){
+document.getElementById("texto").innerHTML+=mensaje.charAt(i);
+i++;
+setTimeout(escribir,35);
+}
+}
+
+function mostrarFinal(){
+document.getElementById("carta").style.display="none";
+document.getElementById("final").style.display="block";
+}
+
+</script>
+
+</body>
+</html>
